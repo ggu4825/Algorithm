@@ -11,18 +11,24 @@ static void fill_data(int *arr, size_t size, DataType type) {
     }
 }
 
-void run_benchmark(const char *algo_name, void (*sort_fn)(int*, size_t), size_t size, DataType type) {
-    int *arr = (int *)malloc(size * sizeof(int));
-    fill_data(arr, size, type);
+void run_benchmark_ctx(const char *algo_name, void (*sort_fn)(SortContext*), size_t size, DataType type) {
+    SortContext ctx = {0};
+    ctx.arr = (int *)malloc(size * sizeof(int));
+    ctx.size = size;
+
+    fill_data(ctx.arr, size, type);
 
     clock_t start = clock();
-    sort_fn(arr, size);
+    sort_fn(&ctx); 
     clock_t end = clock();
 
-    double elapsed_ms = ((double)(end - start) / CLOCKS_PER_SEC) * 1000.0;
+    ctx.elapsed_ms = ((double)(end - start) / CLOCKS_PER_SEC) * 1000.0;
 
     const char *type_str = (type == DATA_RANDOM) ? "Random" : (type == DATA_SORTED) ? "Sorted" : "Reverse";
-    printf("[%s] %s (N=%zu): %.3f ms\n", type_str, algo_name, size, elapsed_ms);
 
-    free(arr);
+    printf("[%s] %s (N=%zu)\n", type_str, algo_name, size);
+    printf("  > 시간: %.3f ms | 비교: %ld 회 | 이동: %ld 회\n\n",
+           ctx.elapsed_ms, ctx.comparisons, ctx.moves);
+
+    free(ctx.arr);
 }
