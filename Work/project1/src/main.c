@@ -18,12 +18,23 @@ int main() {
         size_t n = sizes[i];
         printf("--- Dataset Size: %zu ---\n", n);
 
-        // Random Data Benchmark
+        // 1. Random Data Benchmark
         run_benchmark("Insertion Sort", insertion_sort, n, DATA_RANDOM);
         run_benchmark("Merge Sort    ", merge_sort, n, DATA_RANDOM);
         run_benchmark("Timsort       ", tim_sort, n, DATA_RANDOM);
-
         printf("\n");
+
+        // 2. Sorted (Nearly Sorted) Data Benchmark
+        run_benchmark("Insertion Sort", insertion_sort, n, DATA_SORTED);
+        run_benchmark("Merge Sort    ", merge_sort, n, DATA_SORTED);
+        run_benchmark("Timsort       ", tim_sort, n, DATA_SORTED);
+        printf("\n");
+
+        // 3. Reversed Data Benchmark
+        run_benchmark("Insertion Sort", insertion_sort, n, DATA_REVERSE);
+        run_benchmark("Merge Sort    ", merge_sort, n, DATA_REVERSE);
+        run_benchmark("Timsort       ", tim_sort, n, DATA_REVERSE);
+        printf("\n------------------------------------------\n\n");
     }
 
     return 0;
