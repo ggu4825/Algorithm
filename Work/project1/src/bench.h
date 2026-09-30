@@ -2,6 +2,7 @@
 #define BENCH_H
 
 #include <stddef.h>
+#include "sortctx.h"
 
 typedef enum {
     DATA_RANDOM,
@@ -9,6 +10,6 @@ typedef enum {
     DATA_REVERSE
 } DataType;
 
-void run_benchmark(const char *algo_name, void (*sort_fn)(int*, size_t), size_t size, DataType type);
+void run_benchmark_ctx(const char *algo_name, void (*sort_fn)(SortContext*), size_t size, DataType type);
 
 #endif

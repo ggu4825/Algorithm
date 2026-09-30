@@ -1,17 +1,4 @@
 #include "sort.h"
-
-void insertion_sort(int *arr, size_t n) {
-    for (size_t i = 1; i < n; i++) {
-        int key = arr[i];
-        long j = (long)i - 1;
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
-    }
-}
-#include "sort.h"
 #include "sortctx.h"
 
 void insertion_sort_ctx(SortContext *ctx) {
@@ -20,7 +7,7 @@ void insertion_sort_ctx(SortContext *ctx) {
 
     for (size_t i = 1; i < n; i++) {
         int key = arr[i];
-        ctx->moves++; 
+        ctx->moves++;
 
         long j = (long)i - 1;
         while (j >= 0) {
@@ -36,4 +23,9 @@ void insertion_sort_ctx(SortContext *ctx) {
         arr[j + 1] = key;
         ctx->moves++;
     }
+}
+
+void insertion_sort(int *arr, size_t n) {
+    SortContext ctx = { .arr = arr, .size = n, .comparisons = 0, .moves = 0 };
+    insertion_sort_ctx(&ctx);
 }

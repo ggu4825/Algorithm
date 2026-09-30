@@ -7,7 +7,7 @@ typedef struct {
     int *arr;
     size_t size;
     double elapsed_ms;
-    long comparisons; 
+    long comparisons;
     long moves;
 } SortContext;
 

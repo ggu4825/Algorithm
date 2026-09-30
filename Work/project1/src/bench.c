@@ -1,4 +1,5 @@
 #include "bench.h"
+#include "sortctx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -15,11 +16,13 @@ void run_benchmark_ctx(const char *algo_name, void (*sort_fn)(SortContext*), siz
     SortContext ctx = {0};
     ctx.arr = (int *)malloc(size * sizeof(int));
     ctx.size = size;
+    ctx.comparisons = 0;
+    ctx.moves = 0;
 
     fill_data(ctx.arr, size, type);
 
     clock_t start = clock();
-    sort_fn(&ctx); 
+    sort_fn(&ctx);
     clock_t end = clock();
 
     ctx.elapsed_ms = ((double)(end - start) / CLOCKS_PER_SEC) * 1000.0;
